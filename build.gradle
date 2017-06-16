@@ -1,0 +1,14 @@
+group 'com.yangxiaochen'
+version '0.1.0-SNAPSHOT'
+
+//apply plugin: 'java'
+
+//sourceCompatibility = 1.8
+
+allprojects {
+    repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public"
+        }
+    }
+}

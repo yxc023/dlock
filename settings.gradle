@@ -1,0 +1,5 @@
+rootProject.name = 'dlock'
+include 'dlock-api'
+include 'dlock-redis'
+include 'dlock-zookeeper'
+
