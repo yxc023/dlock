@@ -4,7 +4,8 @@ import com.yangxiaochen.dlock.DLockException;
 import com.yangxiaochen.dlock.DLockFactory;
 import com.yangxiaochen.dlock.redis.RedisDLockConfig;
 import com.yangxiaochen.dlock.redis.RedisDLockFactory;
-import org.apache.curator.test.TestingCluster;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +21,7 @@ import java.util.concurrent.locks.Lock;
  * @date 2016/12/27 16:53
  */
 public class DReentrantLockTest {
-    TestingCluster cluster;
-    String connectString;
-//    DistributedLockConfig config;
+    Logger logger = LogManager.getLogger(DReentrantLockTest.class);
     DLockFactory lockFactory;
 
     @Before
@@ -43,18 +42,18 @@ public class DReentrantLockTest {
     public void testLock() throws Exception {
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            threads.add(new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Lock lock = lockFactory.getReentrantLock("resouce");
-                    lock.lock();
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    lock.unlock();
+            threads.add(new Thread(() -> {
+                Lock lock = lockFactory.getReentrantLock("resouce");
+                logger.info("lock");
+                lock.lock();
+                logger.info("lock ok");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                lock.unlock();
+                logger.info("unlock");
             }, "T" + i));
         }
         for (Thread thread : threads) {
@@ -67,18 +66,15 @@ public class DReentrantLockTest {
 
     @Test
     public void testTryLock() throws InterruptedException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Lock lock = lockFactory.getReentrantLock("resouce");
-                lock.lock();
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                lock.unlock();
+        new Thread(() -> {
+            Lock lock = lockFactory.getReentrantLock("resouce");
+            lock.lock();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            lock.unlock();
         }, "LockThread").start();
 
         try {

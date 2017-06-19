@@ -7,9 +7,8 @@
 </Appenders>
 
 <Loggers>
-	<Logger name = "org.apache.zookeeper.server.quorum.QuorumCnxManager" level="OFF"></Logger>
-	<Logger name = "com.lianjia.fn.commons.lock.DistributedReentrantLock" level="TRACE"></Logger>
-	<Root level="trace">
+	<Logger name = "com.yangxiaochen" level="TRACE"></Logger>
+	<Root level="info">
 		<AppenderRef ref="Console"/>
 	</Root>
 </Loggers>
