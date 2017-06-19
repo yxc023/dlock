@@ -19,6 +19,10 @@ public class ZkDLockFactory implements DLockFactory {
     private CuratorFramework client;
     private ZkDLockConfig config;
 
+    public ZkDLockFactory(ZkDLockConfig config) {
+        this.config = config;
+    }
+
     @Override
     public void init() {
         client = CuratorFrameworkFactory.newClient(config.getConnectString(), new BoundedExponentialBackoffRetry(500, 1800000, 29));
