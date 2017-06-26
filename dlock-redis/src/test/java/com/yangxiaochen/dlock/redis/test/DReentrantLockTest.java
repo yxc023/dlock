@@ -27,7 +27,7 @@ public class DReentrantLockTest {
     @Before
     public void before() throws Exception {
 
-        RedisDLockConfig config = new RedisDLockConfig("127.0.0.1",6379,0, "dlock:");
+        RedisDLockConfig config = new RedisDLockConfig("127.0.0.1", 6379, 0, "dlock:");
         lockFactory = new RedisDLockFactory(config);
         lockFactory.init();
     }
