@@ -5,7 +5,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: "maven-publish"
 
-    group 'com.yangxiaochen'
+    group 'com.yangxiaochen.dlock'
     version '0.0.1-SNAPSHOT'
 
     sourceCompatibility = 1.8

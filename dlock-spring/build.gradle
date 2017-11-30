@@ -1,0 +1,12 @@
+
+dependencies {
+    compile project(":dlock-api")
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.13'
+    compile group: 'org.springframework', name: 'spring-aop', version: '4.3.13.RELEASE'
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile('org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE')
+
+//    testcompile project(":dlock-redis")
+}
