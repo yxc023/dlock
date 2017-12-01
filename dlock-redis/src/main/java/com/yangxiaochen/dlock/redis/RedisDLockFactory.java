@@ -21,14 +21,21 @@ public class RedisDLockFactory implements DLockFactory {
         this.config = config;
     }
 
+    public RedisDLockFactory(RedissonClient redissonClient, String lockPrefix) {
+        config = new RedisDLockConfig();
+        config.setPrefix(lockPrefix);
+        this.redissonClient = redissonClient;
+    }
+
     @Override
     public void init() {
-        Config redissonConfig = new Config();
-        redissonConfig.useSingleServer()
-                .setAddress("redis://" + config.getHost() + ":" + config.getPort())
-                .setDatabase(config.getDb());
-        this.redissonClient = Redisson.create(redissonConfig);
-
+        if (redissonClient == null) {
+            Config redissonConfig = new Config();
+            redissonConfig.useSingleServer()
+                    .setAddress("redis://" + config.getHost() + ":" + config.getPort())
+                    .setDatabase(config.getDb());
+            this.redissonClient = Redisson.create(redissonConfig);
+        }
 
     }
 

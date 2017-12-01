@@ -21,7 +21,6 @@ public class LockAspect {
 
     @Around("@annotation(withLock)")
     public Object around(ProceedingJoinPoint pjp, WithLock withLock) throws Throwable {
-
         String id = withLock.id();
         for (int i = 0; i < pjp.getArgs().length; i++) {
             Object arg = pjp.getArgs()[i];
@@ -31,11 +30,9 @@ public class LockAspect {
         Lock lock = dLockFactory.getReentrantLock(id);
         try {
             lock.lock();
-            System.out.println("lock " + id);
             retVal = pjp.proceed();
         } finally {
             lock.unlock();
-            System.out.println("unlock" + id);
         }
         return retVal;
     }
